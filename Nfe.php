@@ -180,13 +180,6 @@ class NFE {
 
 	public static function download($company_id, $nfe_id, $type = 'pdf'){
 
-		/* [PDF / XML] */
-
-		// $company_id = '56bb8b0c23131833b8635e22';
-		// $nfe_id = '5750a096440c3b053c994fb4';
-
-		// $company_id = '5710eb5356c8e80750a88219';
-		// $nfe_id = '57961c2e56c8e80728719043';
 		 
 		$service = NFE::COMPANIES . '/' . $company_id . '/serviceinvoices/'. $nfe_id . '/' . $type ;
 		$file = NFE::Call(NFE::GET, $service,false,false,true); 
