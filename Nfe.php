@@ -138,14 +138,25 @@ class NFE {
 		return NFE::Call(self::POST, self::COMPANIES, $data);
 	}
 
-	public static function companyCertificate($idcompany, $certificado, $senha) {
+	public static function companyCertificate($idcompany, $certificate, $password) {
 		$base = self::URL . "/" . self::VERSION . "/" . self::COMPANIES . "/" . $idcompany . "/" . self::CERTIFICATES;
 		$headers = array(
 			"Content-Type: multipart/form-data",
 			'Authorization: '.self::API_KEY,
 			'Aczipt: application/json'
 		);
-		$postfields = array("file" => "@".$certificado, "password" => $senha);
+		
+		if(version_compare(phpversion(), '5.5', '<')){
+            $postfields = ["file" => "@".$certificate, "password" => $password];
+        }
+        else{
+            $postfields = array(
+                'file' => curl_file_create($certificate, mime_content_type( $certificate ),"certificate.pfx"),
+                'password' => $password
+            );
+
+        }
+
 		$ch = curl_init();
 
 		$options = array(
